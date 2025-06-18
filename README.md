@@ -20,10 +20,10 @@
 | -------------- | ---------------------- | ------------------------------------------ |
 | **Podman**     | Containerization       | Rootless, daemonless, Docker-compatible    |
 | **Ansible**    | Infrastructure as Code | Declarative configuration, idempotency     |
-| **nginx**      | Web Server             | High performance, efficient resource usage |
+| **Nginx**      | Web Server             | High performance, efficient resource usage |
 | **Bash**       | Scripting              | Automation and error handling              |
 | **Arch Linux** | OS                     | Cutting-edge packages, full control        |
-| **SELinux**    | Security               | Mandatory Access Control                   |
+| **Apparmor**    | Security               | Mandatory Access Control                   |
 | **Nftables**   | Firewall               | Modern packet filtering                    |
 
 <div align="center">
