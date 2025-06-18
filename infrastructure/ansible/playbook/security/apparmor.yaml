@@ -1,0 +1,13 @@
+- name: Install Apparmor
+  hosts: lune
+  become: true
+
+  tasks:
+    - name: Install Apparmor
+      ansible.builtin.package:
+        name: apparmor
+        state: latest
+
+    - name: Enabled Apparmor
+      ansible.posix.apparmor:
+        state: enabled

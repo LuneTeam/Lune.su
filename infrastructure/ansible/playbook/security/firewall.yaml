@@ -1,0 +1,23 @@
+- name: Install Firewall
+  hosts: lune
+  become: true
+
+  tasks:
+    - name: Install firewall packages
+      ansible.builtin.package:
+        name: firewalld
+        state: latest
+
+    - name: Permanently enable https service
+      ansible.posix.firewalld:
+        service: https
+        state: enabled
+        permanent: true
+        immediate: true
+        offline: true
+
+    - name: Add on port 22/tcp
+      ansible.posix.firewalld:
+        port: 22/tcp
+        permanent: true
+        state: enabled

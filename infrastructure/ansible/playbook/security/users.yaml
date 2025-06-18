@@ -1,0 +1,11 @@
+- name: New User Installation
+  hosts: lune
+  become: true
+
+  tasks:
+    - name: Install new user
+      ansible.builtin.user:
+        name: lune
+        shell: /bin/bash
+        append: true
+        groups: root

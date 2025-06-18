@@ -1,0 +1,6 @@
+- name: Start server
+  hosts: lune
+
+  tasks:
+    - name: Run start.sh
+      ansible.builtin.command: "/home/lune/server/start.sh"

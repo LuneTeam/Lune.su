@@ -1,0 +1,42 @@
+- name: Download system update
+  hosts: lune
+  become: true
+  vars:
+    default_retries: 2
+    default_delay: 5
+    reboot_timeout: 150
+    wait_timeout: 600
+
+  tasks:
+    - name: Install archlinux-keyring
+      ansible.builtin.package:
+        name: archlinux-keyring
+        state: latest
+
+    - name: Sync Archlinux-keyring
+      ansible.builtin.command: archlinux-keyring-wkd-sync
+      failed_when: false
+
+    - name: Install Python
+      ansible.builtin.package:
+        name: python
+        state: latest
+
+    - name: Update System
+      ansible.builtin.pacman:
+        update_cache: true
+        upgrade: true
+        state: latest
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        reboot_timeout: "{{ reboot_timeout }}"
+      register: reboot_result
+      retries: "{{ default_retries }}"
+      delay: "{{ default_delay }}"
+
+    - name: Waiting for the server to come back
+      ansible.builtin.wait_for:
+        port: 22
+        delay: "{{ default_delay }}"
+        timeout: "{{ wait_timeout }}"
