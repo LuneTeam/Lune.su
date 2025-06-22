@@ -12,8 +12,8 @@
 - name: Install Nftables and settings
   ansible.builtin.import_playbook: ./security/users.yaml
 
-#- name: Install Apparmor and settings
-#  ansible.builtin.import_playbook: ./security/apparmor.yaml
+# - name: Install Apparmor and settings
+#   ansible.builtin.import_playbook: ./security/apparmor.yaml
 
 - name: Install Lune.su
   ansible.builtin.import_playbook: ./app/lune.yaml

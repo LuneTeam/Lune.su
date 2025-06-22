@@ -8,24 +8,9 @@
     wait_timeout: 600
 
   tasks:
-    - name: Install archlinux-keyring
-      ansible.builtin.package:
-        name: archlinux-keyring
-        state: latest
-
-    - name: Sync Archlinux-keyring
-      ansible.builtin.command: archlinux-keyring-wkd-sync
-      failed_when: false
-
-    - name: Install Python
-      ansible.builtin.package:
-        name: python
-        state: latest
-
     - name: Update System
-      ansible.builtin.pacman:
+      ansible.builtin.dnf:
         update_cache: true
-        upgrade: true
         state: latest
 
     - name: Reboot

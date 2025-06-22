@@ -5,7 +5,7 @@
   tasks:
     - name: Copy Composefile
       copy:
-        src: "{{ PROJECT_DIR }}/podman/compose/compose.yaml"
+        src: "{{ PROJECT_DIR }}/podman/compose.yaml"
         dest: /home/lune/server/
 
     - name: Copy App
