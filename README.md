@@ -23,7 +23,7 @@
 | **Nginx**      | Web Server             | High performance, efficient resource usage |
 | **Bash**       | Scripting              | Automation and error handling              |
 | **AlmaLinux** | OS                     | Excellent security and good support        |
-| **AppArmor**    | Security               | Mandatory Access Control                   |
+| **SELinux**    | Security               | Mandatory Access Control                   |
 | **Nftables**   | Firewall               | Modern packet filtering                    |
 
 <div align="center">
@@ -50,9 +50,9 @@
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/ssl/cert.key -out ./nginx/ssl/cert.pem -subj "/CN=domain.com"
   ```
 
-  2. Create a file with your hosts in infrastructure/ansible/inventory/hosts.yaml
+  2. Create a file with your hosts in infra/ansible/inventory/hosts.yaml
   ```bash
-  nvim ./infrastructure/ansible/inventory/hosts.yaml
+  nvim ./infra/ansible/inventory/hosts.yaml
   ```
 
   ```yaml
@@ -90,7 +90,7 @@
 
 4. **Run ansible master playbooks**
     ```bash
-    ansible-playbook -i infrastructure/ansible/inventory/hosts.yaml infrastructure/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
+    ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
     ```
 
 5. **Podman login -u "name"**

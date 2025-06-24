@@ -1,3 +1,2 @@
-podman/nginx/ssl/*
-infrastructure/ansible/inventory/hosts.yaml
-podman/monitoring/
+images/nginx/ssl
+infra/ansible/inventory/hosts.yaml

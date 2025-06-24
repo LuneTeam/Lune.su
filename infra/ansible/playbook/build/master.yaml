@@ -1,0 +1,12 @@
+# Master Playbook for creating Lune.su from scratch
+- name: Install system upgrade
+  ansible.builtin.import_playbook: ./upgrade/upgrade.yaml
+
+# - name: Initialize main.yaml to update security
+#   ansible.builtin.import_playbook: ./security/main.yaml
+
+- name: Install Podman and Compose
+  ansible.builtin.import_playbook: ./podman/podman.yaml
+
+- name: Copying the necessary files and running helper.sh
+  ansible.builtin.import_playbook: ./podman/files.yaml

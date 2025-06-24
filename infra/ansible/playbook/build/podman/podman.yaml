@@ -1,0 +1,31 @@
+- name: Install Podman
+  hosts: lune
+  become: true
+
+  tasks:
+    - name: Install podman
+      ansible.builtin.package:
+        name: podman
+        state: latest
+
+    - name: Install Python packages
+      ansible.builtin.package:
+        name:
+          - python3
+          - python3-pip
+          - python3-devel
+        state: latest
+
+    - name: Install pyyaml via pip3
+      ansible.builtin.pip:
+        name: pyyaml
+        executable: pip3
+
+    - name: Install podman-compose
+      ansible.builtin.pip:
+        name: podman-compose
+
+    - name: Settings podman
+      ansible.builtin.copy:
+        src: "{{ PROJECT_DIR }}/infra/ansible/playbook/build/podman/registries.conf"
+        dest: /etc/containers/registries.conf
