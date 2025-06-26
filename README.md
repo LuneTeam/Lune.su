@@ -43,7 +43,7 @@
   1. Using openssl or certbot create tsl/ssl certificates
   # CertBot
   ```bash
-  sudo certbot --nginx
+  certbot --nginx
   ```
   # OpenSSL
   ```bash
@@ -58,40 +58,18 @@
   ```yaml
   webserver:
     hosts:
-      lune:
+      luneA:
         ansible_host: 1.234.567.8
         ansible_user: developer
-      luneDev:
+      luneB:
         ansible_host: 1.234.567.8
         ansible_user: developer
   ```
 
-  3. Set up podman/monitoring/prometheus.yaml
-  ```yaml
-  global:
-  scrape_interval: 1m
-
-  scrape_configs:
-  - job_name: "prometheus"
-    scrape_interval: 1m
-    static_configs:
-      - targets: ["localhost:9090"]
-
-  - job_name: "node"
-    static_configs:
-      - targets: ["node-exporter:9100"]
-
-  remote_write:
-    - url: "Prometheus remote_write endpoint"
-      basic_auth:
-        username: "Grafana User"
-        password: "Grafana Cloud Access Policy Token"
-  ```
-
-4. **Run ansible master playbooks**
+3. **Run ansible master playbooks**
     ```bash
     ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
     ```
 
-5. **Podman login -u "name"**
+4. **Podman login -u "name"**
    For reasons unseen to me, you will have to log into your account imperatively after the error

@@ -3,11 +3,8 @@ FROM golang:1.24.3
 RUN useradd -m lune
 
 COPY --chown=lune:lune . /home/lune/app
-COPY --chown=lune:lune ./assets/* /home/lune/app/assets/
 
 WORKDIR /home/lune/app
-
-RUN go build -o http .
 
 EXPOSE 8080
 

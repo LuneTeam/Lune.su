@@ -1,6 +1,6 @@
 services:
   nginx:
-    image: docker.io/laimick/luneback:2.0
+    image: docker.io/laimick/luneback:latest
     volumes:
       - /home/lune/server/ssl/:/etc/nginx/ssl/
     ports:
@@ -10,7 +10,7 @@ services:
     restart: unless-stopped
 
   lune:
-    image: docker.io/laimick/luneapp:2.0
+    image: docker.io/laimick/luneapp:latest
     networks:
       - lune_net
     restart: unless-stopped
