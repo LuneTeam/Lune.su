@@ -1,9 +1,0 @@
-- name: Install Nftables
-  hosts: lune
-  become: true
-
-  tasks:
-    - name: Install nftables packages
-      ansible.builtin.package:
-        name: nftables
-        state: latest

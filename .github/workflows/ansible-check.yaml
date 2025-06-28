@@ -1,0 +1,28 @@
+name: Ansible Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: unbuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Install ansible
+        run: sudo apt install -y ansible
+
+      - name: Ansible Check-lint
+        run: |
+          ansible-playbook --check-lint \\
+            -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/build/master.yaml \\
+            -e PROJECT_DIR=./
+
+      - name: Ansible Check
+        run: |
+          ansible-playbook --check \\
+            -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/build/master.yaml \\
+            -e PROJECT_DIR=./

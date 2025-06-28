@@ -1,0 +1,17 @@
+- name: Setting up a new user (rootless)
+  hosts: lune
+  become: false
+
+  tasks:
+    - name: Creating group
+      ansible.builtin.group:
+        name: develop
+        state: present
+
+    - name: Adding a new user
+      ansible.builtin.user:
+        name: lune
+        create_home: false
+        shell: /bin/bash
+        groups: develop
+        append: true

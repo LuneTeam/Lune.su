@@ -1,0 +1,13 @@
+# Main Playbook for installation of all security systems
+
+- name: Setting up a new rootless user
+  ansible.builtin.import_playbook: ./users/lune.yaml
+
+- name: Settings up logs ( Rsyslog )
+  ansible.builtin.import_playbook: ./logs/rsyslog.yaml
+
+- name: Setting up network security ( Firewalld )
+  ansible.builtin.import_playbook: ./networking/firewalld.yaml
+
+- name: Setting up network security ( Fail2ban )
+  ansible.builtin.import_playbook: ./networking/fail2ban.yaml

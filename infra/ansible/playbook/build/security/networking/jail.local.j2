@@ -1,0 +1,11 @@
+[DEFAULT]
+bantime  = 600
+findtime  = 600
+maxretry = 5
+allowipv6 = true
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+action = iptables-multiport[name=sshd, port=ssh, protocol=tcp]
+logpath = /var/log/sshd/sshd.log

@@ -1,0 +1,38 @@
+- name: Install rsyslog
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install rsyslog
+      ansible.builtin.dnf:
+        name: rsyslog
+        state: present
+
+    - name: Restart rsyslog service
+      ansible.builtin.systemd:
+        name: rsyslog
+        state: restarted
+
+    - name: Configure rsyslog for SSH logging
+      ansible.builtin.copy:
+        dest: /etc/rsyslog.d/50-ssh.conf
+        content: |
+          if $programname == 'sshd' then /var/log/sshd/sshd.log
+          & stop
+        owner: root
+        group: root
+        mode: "0644"
+
+    - name: Enable log sshd
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#SyslogFacility AUTH"
+        line: "SyslogFacility AUTH"
+        state: present
+
+    - name: Level log sshd
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#LogLevel INFO"
+        line: "LogLevel INFO"
+        state: present

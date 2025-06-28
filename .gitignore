@@ -1,2 +1,18 @@
-podman/nginx/ssl/*
-infrastructure/ansible/inventory/hosts.yaml
+# nginx
+images/nginx/ssl
+
+# build files ( astra ) p.s. https://github.com/MounTemed/lune-template
+images/app/_astro
+images/app/index.html
+images/app/profile.jpg
+
+# ansible
+infra/ansible/inventory/hosts.yaml
+infra/ansible/playbook/build/podman/login.yaml
+
+# terraform
+infra/terraform/values.tfvars
+infra/terraform/.terraform
+infra/terraform/terraform.tfstate
+infra/terraform/.terraform.lock.hcl
+infra/terraform/terraform.tfstate.backup

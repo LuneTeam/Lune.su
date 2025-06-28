@@ -1,0 +1,17 @@
+name: Check Build And Run ContainerFile
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check:
+    runs-on: unbuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Checking if nginx/containerfile build works
+        run: |
+          podman build -f ./images/nginx/.

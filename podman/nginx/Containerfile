@@ -1,8 +1,0 @@
-FROM nginx:latest
-
-RUN mkdir -p /etc/nginx/ssl/
-
-COPY ./ssl/* /etc/nginx/ssl/
-COPY . /etc/nginx/
-
-EXPOSE 443
