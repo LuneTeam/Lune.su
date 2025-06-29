@@ -33,16 +33,15 @@
 </div>
 
 > [!IMPORTANT]
-> Don't forget to change compose.yaml to your docker.hub
-> Don't forget to make npm app in images/app, I recommend via astral or make your own via golang and static index.html
+> Ensure you update the compose.yaml file to reference your Docker Hub. Also, create the npm app in the images/app directory. I suggest using Astral or building your own with GoLang and a static index.html
 
-1.  **Clone the repository**:
+<h2>1.  Clone the repository</h2>
+
   ```bash
   git clone https://github.com/LuneDots/Lune.su
   ```
 
-2.  **Prepare your VPS**:
-    Ensure you have a fresh AlmaLinux 9.0 installation
+<h2>2.  Prepare your VPS</h2>
 
 > [!NOTE]
 > **You can do it via terraform!**
@@ -54,34 +53,37 @@
 
   ```tf
   token_timeweb = "1234"
-  ssh_key       = [1234]
-  preset_ids    = 1234
-  project_ids   = 1234
-  ipv4_static   = "1234"
+  ssh_key              = [1234]
+  preset_ids       = 1234
+  project_ids     = 1234
+  ipv4_static     = "1234"
   ```
 
   2.2 Generate a change file
   ```bash
-  terraform plan -var-file=name.tfvars
+  terraform plan -var-file=values.tfvars
   ```
 
   2.3 Create your vps via terraform via apply
   ```bash
-  terraform apply -var-file=name.tfvars
+  terraform apply -var-file=values.tfvars
   ```
 
-3.  **Create and configure new files**
-  1. Using openssl or certbot create tsl/ssl certificates
-  # CertBot
+<h2>3.  Create and configure new files</h2>
+   
+      3.1 Using openssl or certbot create tsl/ssl certificates
+  <h3>CertBot</h3>
+  
   ```bash
   certbot --nginx # preferable
   ```
-  # OpenSSL
+  <h3>OpenSSL</h3>
+  
   ```bash
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/ssl/cert.key -out ./nginx/ssl/cert.pem -subj "/CN=domain.com"
   ```
 
-  2. Create a file with your hosts in infra/ansible/inventory/hosts.yaml
+   3.2 Create a file with your hosts in infra/ansible/inventory/hosts.yaml
   ```bash
   nvim ./infra/ansible/inventory/hosts.yaml
   ```
@@ -97,7 +99,7 @@
         ansible_user: developer
   ```
 
-  3. Create and configure Podman login file infra/ansible/playbook/build/podman/login.yaml
+   3.3 Create and configure Podman login file infra/ansible/playbook/build/podman/login.yaml
   ```bash
   nvim ./infra/ansible/playbook/build/podman/login.yaml
   ```
@@ -114,7 +116,8 @@
           password: "1234567890"
   ```
 
-4.  **Run ansible master playbooks**
+<h2>4.  Run ansible master playbooks</h2>
+
   ```bash
   ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
   ```
