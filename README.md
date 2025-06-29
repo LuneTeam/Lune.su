@@ -37,15 +37,21 @@
 > Don't forget to make npm app in images/app, I recommend via astral or make your own via golang and static index.html
 
 1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/LuneDots/Lune.su
-    ```
+  ```bash
+  git clone https://github.com/LuneDots/Lune.su
+  ```
 
 2.  **Prepare your VPS**:
     Ensure you have a fresh AlmaLinux 9.0 installation
 
-    **You can do it via terraform!**
-  1. Create a new terraform file variables
+> [!NOTE]
+> **You can do it via terraform!**
+
+  2.1 Create a new terraform file variables
+  ```bash
+  nvim ./infra/terraform/values.tfvars
+  ```
+
   ```tf
   token_timeweb = "1234"
   ssh_key       = [1234]
@@ -54,12 +60,12 @@
   ipv4_static   = "1234"
   ```
 
-  2. Generate a change file
+  2.2 Generate a change file
   ```bash
   terraform plan -var-file=name.tfvars
   ```
 
-  3. Create your vps via terraform via apply
+  2.3 Create your vps via terraform via apply
   ```bash
   terraform apply -var-file=name.tfvars
   ```
