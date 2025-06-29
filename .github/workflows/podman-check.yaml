@@ -1,4 +1,4 @@
-name: Check Build And Run ContainerFile
+name: Check Build ContainerFile
 
 on:
   pull_request:
@@ -11,6 +11,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
+      - name: Install podman
+        run: |
+          apt install -y podman
 
       - name: Checking if nginx/containerfile build works
         run: |

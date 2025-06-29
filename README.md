@@ -32,9 +32,9 @@
     <h3></h3>
 </div>
 
-[!IMPORTANT]
->Don't forget to change compose.yaml to your docker.hub!
->Don't forget to make npm app in images/app, I recommend via astral or make your own via golang and static index.html
+> [!IMPORTANT]
+> Don't forget to change compose.yaml to your docker.hub
+> Don't forget to make npm app in images/app, I recommend via astral or make your own via golang and static index.html
 
 1.  **Clone the repository**:
     ```bash
@@ -46,7 +46,7 @@
 
     **You can do it via terraform!**
   1. Create a new terraform file variables
-  ```terraform
+  ```tf
   token_timeweb = "1234"
   ssh_key       = [1234]
   preset_ids    = 1234
@@ -56,19 +56,19 @@
 
   2. Generate a change file
   ```bash
-  terraform plan -var-file=values.tfvars
+  terraform plan -var-file=name.tfvars
   ```
 
   3. Create your vps via terraform via apply
   ```bash
-  terraform apply -var-file=values.tfvars
+  terraform apply -var-file=name.tfvars
   ```
 
 3.  **Create and configure new files**
   1. Using openssl or certbot create tsl/ssl certificates
   # CertBot
   ```bash
-  certbot --nginx
+  certbot --nginx # preferable
   ```
   # OpenSSL
   ```bash
@@ -109,6 +109,6 @@
   ```
 
 4.  **Run ansible master playbooks**
-    ```bash
-    ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
-    ```
+  ```bash
+  ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
+  ```

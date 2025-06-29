@@ -11,7 +11,7 @@
     - name: Adding a new user
       ansible.builtin.user:
         name: lune
-        create_home: false
+        create_home: true
         shell: /bin/bash
         groups: develop
         append: true
