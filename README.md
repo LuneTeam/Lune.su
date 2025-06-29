@@ -71,7 +71,8 @@
 
 <h2>3.  Create and configure new files</h2>
    
-      3.1 Using openssl or certbot create tsl/ssl certificates
+  3.1 Using openssl or certbot create tsl/ssl certificates
+  
   <h3>CertBot</h3>
   
   ```bash
