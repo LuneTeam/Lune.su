@@ -1,0 +1,20 @@
+services:
+  nginx:
+    image: docker.io/laimick/luneback:latest
+    volumes:
+      - /home/lune/server/ssl/:/etc/nginx/ssl/
+    ports:
+      - "443:443"
+    networks:
+      - lune_net
+    restart: unless-stopped
+
+  lune:
+    image: docker.io/laimick/luneapp:latest
+    networks:
+      - lune_net
+    restart: unless-stopped
+
+networks:
+  lune_net:
+    driver: bridge

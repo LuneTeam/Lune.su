@@ -1,0 +1,29 @@
+- name: Install firewalld and settings
+  hosts: lune
+  become: true
+
+  tasks:
+    - name: Install firewalld
+      ansible.builtin.dnf:
+        name: firewalld
+        state: latest
+
+    - name: Permanently enable https service, also enable it immediately if possible
+      ansible.posix.firewalld:
+        service: https
+        state: enabled
+        permanent: true
+        immediate: true
+        offline: true
+
+    - name: Allow traffic on ssh port 22/tcp
+      ansible.posix.firewalld:
+        port: 22/tcp
+        permanent: true
+        state: enabled
+
+    - name: Start firewalld
+      ansible.builtin.systemd:
+        name: firewalld
+        state: started
+        enabled: true

@@ -1,0 +1,24 @@
+- name: Download system update
+  hosts: lune
+  become: true
+  vars:
+    default_delay: 5
+
+  tasks:
+    - name: Update System
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest
+
+    - name: Reboot
+      ansible.builtin.reboot:
+        reboot_timeout: 150
+      register: reboot_result
+      retries: 2
+      delay: "{{ default_delay }}"
+
+    - name: Waiting for the server to come back
+      ansible.builtin.wait_for:
+        port: 22
+        delay: "{{ default_delay }}"
+        timeout: 600
