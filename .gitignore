@@ -9,6 +9,11 @@ images/app/profile.jpg
 # ansible
 infra/ansible/inventory/hosts.yaml
 infra/ansible/playbook/build/podman/login.yaml
+# ansible logs
+logs/ansible.log
+
+# grafana
+infra/monitoring/grafana
 
 # terraform
 infra/terraform/values.tfvars

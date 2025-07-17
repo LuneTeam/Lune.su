@@ -1,11 +1,6 @@
 - name: Install and configure fail2ban
-  hosts: all
+  hosts: lune
   become: true
-
-  vars:
-    bantime: 600
-    findtime: 600
-    maxretry: 3
 
   handlers:
     - name: Restart_fail2ban
