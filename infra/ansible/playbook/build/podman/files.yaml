@@ -26,4 +26,5 @@
     - name: Run start.sh
       become_user: lune
       become: false
-      ansible.builtin.shell: # todo
+      ansible.builtin.shell: |
+        podman compose -f /home/lune/server/compose.yaml up -d --build
