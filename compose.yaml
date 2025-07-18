@@ -50,9 +50,7 @@ services:
     image: grafana/grafana:latest
     container_name: grafana
     environment:
-      GF_SERVER_DOMAIN: "grafana.lune.su"
-      GF_SERVER_ROOT_URL: "https://grafana.lune.su/"
-      GF_SERVER_SERVE_FROM_SUB_PATH: "false"
+      GF_SERVER_ROOT_URL: "/grafana"
     volumes:
       - grafana_data:/var/lib/grafana
     networks:
