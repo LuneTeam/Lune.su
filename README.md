@@ -8,8 +8,8 @@
     <h4>A showcase of what one determined developer can build with modern open-source tools</h4>
 </div>
 
-> [!WARNING]
-> This repository is under active development, if something does not work, write issues
+> [!IMPORTANT]
+> This repository is already quite self-sufficient after configuration, but if problems are found, write to issues
 
 <div align="center">
     <h1>🛠️ Core Technologies</h1>
@@ -18,22 +18,23 @@
 
 | Technology     | Purpose                | Advantages                                 |
 | -------------- | ---------------------- | ------------------------------------------ |
-| **Podman**     | Containerization       | Rootless, daemonless, Docker-compatible    |
-| **Ansible**    | Infrastructure as Code | Declarative configuration, idempotency     |
-| **Nginx**      | Web Server             | High performance, efficient resource usage |
-| **Bash**       | Scripting              | Automation and error handling              |
-| **AlmaLinux** | OS                     | Excellent security and good support        |
-| **Firewalld**   | Firewall               | Dynamic firewall rules management                    |
-| **Fail2Ban**   | Intrusion Prevention               | Automatic blocking of malicious IPs                    |
-| **Rsyslog**   | Logging & Monitoring               | Centralized logging with advanced filters                    |
+| **Podman Compose**| Container Management| Rootless, daemonless, Docker-compatible|
+| **Ansible**| Config Management & Automation | Agentless, declarative (YAML), idempotent|
+| **Terraform**| Infrastructure as Code (IaC)| Declarative, multi-cloud, manages state|
+| **Nginx**| Web Server & Reverse Proxy| High performance, low resource usage, scalable|
+| **Github Actions**| CI/CD & Automation| Natively integrated with GitHub, highly customizable|
+| **AlmaLinux**| Operating System| 1:1 RHEL compatible, stable, long-term support|
+| **Firewalld**| Firewall Management| Dynamic rule updates (no service restart), zones|
+| **Fail2Ban**| Intrusion Prevention| Scans logs and bans IPs to prevent brute-force attacks|
+| **Grafana**| Data Visualization| Rich, interactive dashboards and alerting|
+| **Prometheus**| Monitoring & Alerting| Powerful query language (PromQL), pull-based metrics|
+| **Node-exporter**| System Metric Exporter| Exposes hardware & OS metrics for Prometheus|
+
 
 <div align="center">
     <h1>📦 Installation Guide</h1>
     <h3></h3>
 </div>
-
-> [!IMPORTANT]
-> Ensure you update the compose.yaml file to reference your Docker Hub. Also, create the npm app in the images/app directory. I suggest using Astral or building your own with GoLang and a static index.html
 
 <h2>1.  Clone the repository</h2>
 
@@ -53,10 +54,10 @@
 
   ```tf
   token_timeweb = "1234"
-  ssh_key              = [1234]
-  preset_ids       = 1234
-  project_ids     = 1234
-  ipv4_static     = "1234"
+  ssh_key       = [1234]
+  preset_ids    = 1234
+  project_ids   = 1234
+  ipv4_static   = "1234"
   ```
 
   2.2 Generate a change file
@@ -70,16 +71,16 @@
   ```
 
 <h2>3.  Create and configure new files</h2>
-   
+
   3.1 Using openssl or certbot create tsl/ssl certificates
-  
+
   <h3>CertBot</h3>
-  
+
   ```bash
   certbot --nginx # preferable
   ```
   <h3>OpenSSL</h3>
-  
+
   ```bash
   openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ./nginx/ssl/cert.key -out ./nginx/ssl/cert.pem -subj "/CN=domain.com"
   ```
@@ -94,10 +95,8 @@
     hosts:
       luneA:
         ansible_host: 1.234.567.8
-        ansible_user: developer
       luneB:
         ansible_host: 1.234.567.8
-        ansible_user: developer
   ```
 
    3.3 Create and configure Podman login file infra/ansible/playbook/build/podman/login.yaml
@@ -120,5 +119,5 @@
 <h2>4.  Run ansible master playbooks</h2>
 
   ```bash
-  ansible-playbook -i infra/ansible/inventory/hosts.yaml infra/ansible/playbook/master.yaml -e PROJECT_DIR=YOUR_DIRECTORY
+  ansible-playbook infra/ansible/playbook/build/master.yaml
   ```
