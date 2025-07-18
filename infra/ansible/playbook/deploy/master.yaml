@@ -1,4 +1,7 @@
-# Master Playbook for Lune.su update
+# Master Playbook for Lune.su Deployment with gha
 
 - name: Install system upgrade
   ansible.builtin.import_playbook: ./upgrade/upgrade.yaml
+
+- name: Deploy settings to vps
+  ansible.builtin.import_playbook: ./upgrade/deploy.yaml

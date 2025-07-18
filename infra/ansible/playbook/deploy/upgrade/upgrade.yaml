@@ -22,15 +22,3 @@
         port: 22
         delay: "{{ default_delay }}"
         timeout: 600
-
-    - name: Copy cd.sh
-      ansible.builtin.copy:
-        src: "{{ PROJECT_DIR }}/infra/ansible/playbook/update/scripts/cd.sh"
-        dest: /home/lune/server
-        mode: "0755"
-        owner: lune
-
-    - name: Start cd.sh
-      become_user: lune
-      become: false
-      ansible.builtin.command: "/home/lune/server/cd.sh"

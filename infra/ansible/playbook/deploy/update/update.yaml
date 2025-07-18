@@ -1,0 +1,12 @@
+- name: Preparation for Launch
+  hosts: all
+
+  tasks:
+    - name: Rebuild and restart Podman containers
+      shell: |
+        cd /home/lune/server/ && \
+        podman compose down && \
+        podman system prune -a -f && \
+        podman compose -f /home/lune/server/compose.yaml up -d --build
+      args:
+        executable: /bin/bash

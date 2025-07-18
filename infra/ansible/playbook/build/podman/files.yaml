@@ -23,14 +23,7 @@
         src: "{{ PROJECT_DIR }}/infra/monitoring/prometheus/prometheus.yaml"
         dest: /home/lune/server
 
-    - name: Copy Bash Script
-      ansible.builtin.copy:
-        src: "{{ PROJECT_DIR }}/infra/ansible/playbook/build/scripts/start.sh"
-        dest: /home/lune/server/
-        mode: "0755"
-        owner: lune
-
     - name: Run start.sh
       become_user: lune
       become: false
-      ansible.builtin.command: "/home/lune/server/start.sh"
+      ansible.builtin.shell: # todo
