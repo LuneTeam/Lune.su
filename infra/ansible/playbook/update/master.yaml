@@ -1,4 +1,0 @@
-# Master Playbook for Lune.su update
-
-- name: Install system upgrade
-  ansible.builtin.import_playbook: ./upgrade/upgrade.yaml

@@ -19,8 +19,8 @@ provider "twc" {
   token = var.token_timeweb
 }
 
-resource "twc_server" "lunesu_prod" {
-  name                      = "lunesu_prod"
+resource "twc_server" "luneprod" {
+  name                      = "luneprod"
   preset_id                 = var.preset_ids
   project_id                = var.project_ids
   os_id                     = 91

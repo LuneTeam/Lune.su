@@ -1,6 +1,14 @@
+volumes:
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  lune_net:
+    driver: bridge
+
 services:
   nginx:
-    image: docker.io/laimick/luneback:latest
+    image: docker.io/laimick/luneback
     volumes:
       - /home/lune/server/ssl/:/etc/nginx/ssl/
     ports:
@@ -11,30 +19,78 @@ services:
       - lune1
       - lune2
       - lune3
+      - grafana
+      - prometheus
+      - node-exporter
     restart: unless-stopped
 
   lune1:
-    image: docker.io/laimick/luneapp:latest
+    image: docker.io/laimick/luneapp
     networks:
       - lune_net
     expose:
       - 3000
     restart: unless-stopped
-  lune2: 
-    image: docker.io/laimick/luneapp:latest
+  lune2:
+    image: docker.io/laimick/luneapp
     networks:
       - lune_net
     expose:
       - 3000
     restart: unless-stopped
-  lune3: 
-    image: docker.io/laimick/luneapp:latest
+  lune3:
+    image: docker.io/laimick/luneapp
     networks:
       - lune_net
     expose:
       - 3000
     restart: unless-stopped
 
-networks:
-  lune_net:
-    driver: bridge
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    environment:
+      GF_SERVER_ROOT_URL: "/grafana"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - lune_net
+    expose:
+      - 3000
+    restart: unless-stopped
+
+  prometheus:
+    image: docker.io/prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--web.enable-lifecycle"
+    networks:
+      - lune_net
+    expose:
+      - 9090
+    restart: unless-stopped
+
+  node-exporter:
+    image: docker.io/prom/node-exporter
+    container_name: node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.rootfs=/rootfs"
+      - "--path.sysfs=/host/sys"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    networks:
+      - lune_net
+    expose:
+      - 9100
+    restart: unless-stopped

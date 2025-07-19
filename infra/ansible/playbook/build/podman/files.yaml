@@ -1,29 +1,30 @@
 - name: Running containers on the server
   hosts: lune
   become: true
+  vars:
+    PROJECT_DIR: "{{ lookup('env', 'PWD') }}"
 
   tasks:
     - name: Copy Composefile
-      copy:
+      ansible.builtin.copy:
         src: "{{ PROJECT_DIR }}/compose.yaml"
         dest: /home/lune/server/
 
     - name: Copy SSL
-      copy:
+      ansible.builtin.copy:
         src: "{{ item }}"
         dest: /home/lune/server/ssl/
         follow: true
       with_fileglob:
         - "{{ PROJECT_DIR }}/images/nginx/ssl/*"
 
-    - name: Copy Bash Script
-      copy:
-        src: "{{ PROJECT_DIR }}/infra/ansible/playbook/build/scripts/start.sh"
-        dest: /home/lune/server/
-        mode: "0755"
-        owner: lune
+    - name: Copy prometheus file
+      ansible.builtin.copy:
+        src: "{{ PROJECT_DIR }}/infra/monitoring/prometheus/prometheus.yaml"
+        dest: /home/lune/server
 
     - name: Run start.sh
       become_user: lune
       become: false
-      ansible.builtin.command: "/home/lune/server/start.sh"
+      ansible.builtin.shell: |
+        podman compose -f /home/lune/server/compose.yaml up -d --build

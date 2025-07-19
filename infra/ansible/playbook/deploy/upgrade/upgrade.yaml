@@ -22,15 +22,3 @@
         port: 22
         delay: "{{ default_delay }}"
         timeout: 600
-
-    - name: Copy helpers.sh
-      ansible.builtin.copy:
-        src: "{{ PROJECT_DIR }}/infra/ansible/playbook/update/scripts/helpers.sh"
-        dest: /home/lune/server
-        mode: "0755"
-        owner: lune
-
-    - name: Start helpers.sh
-      become_user: lune
-      become: false
-      ansible.builtin.command: "/home/lune/server/helpers.sh"

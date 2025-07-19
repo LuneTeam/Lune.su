@@ -1,0 +1,60 @@
+name: CI/CD frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          token: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Setting the required variables
+        run: |
+          echo "webserver:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "  hosts:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "    lune:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "      ansible_host: ${{ secrets.CLOUD_VPS }}" >> ./infra/ansible/inventory/hosts.yaml
+
+      - name: Build and push app
+        uses: docker/build-push-action@v6
+        with:
+          context: ./images/app/
+          push: true
+          tags: docker.io/${{ secrets.DOCKER_USER }}/luneapp:latest
+
+      - name: Build and push back
+        uses: docker/build-push-action@v6
+        with:
+          context: ./images/nginx/
+          push: true
+          tags: docker.io/${{ secrets.DOCKER_USER }}/luneback:latest
+
+  cd:
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update system and install ansible
+        run: sudo apt update && apt upgrade-full && apt install -y ansible
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Start ansible master.yaml playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
+        run: ansible-playbook ./infra/ansible/playbook/deploy/master.yaml
