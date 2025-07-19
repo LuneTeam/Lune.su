@@ -21,6 +21,13 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Setting the required variables
+        run: |
+          echo "webserver:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "  hosts:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "    lune:" >> ./infra/ansible/inventory/hosts.yaml
+          echo "      ansible_host: ${{ secrets.CLOUD_VPS }}" >> ./infra/ansible/inventory/hosts.yaml
+
       - name: Build and push app
         uses: docker/build-push-action@v6
         with:

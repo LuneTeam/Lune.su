@@ -5,6 +5,7 @@ images/nginx/ssl
 images/app/_astro
 images/app/index.html
 images/app/profile.jpg
+# todo: is it needed?
 
 # ansible
 infra/ansible/inventory/hosts.yaml
