@@ -4,4 +4,4 @@
   ansible.builtin.import_playbook: ./upgrade/upgrade.yaml
 
 - name: Deploy settings to vps
-  ansible.builtin.import_playbook: ./upgrade/deploy.yaml
+  ansible.builtin.import_playbook: ./update/update.yaml
