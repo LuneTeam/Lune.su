@@ -8,7 +8,7 @@ networks:
 
 services:
   nginx:
-    image: docker.io/laimick/luneback
+    image: docker.io/laimick/luneback:latest
     volumes:
       - /home/lune/server/ssl/:/etc/nginx/ssl/
     ports:
@@ -25,25 +25,25 @@ services:
     restart: unless-stopped
 
   lune1:
-    image: docker.io/laimick/luneapp
+    image: docker.io/laimick/luneapp:latest
     networks:
       - lune_net
     expose:
-      - 3000
+      - 8080
     restart: unless-stopped
   lune2:
-    image: docker.io/laimick/luneapp
+    image: docker.io/laimick/luneapp:latest
     networks:
       - lune_net
     expose:
-      - 3000
+      - 8080
     restart: unless-stopped
   lune3:
-    image: docker.io/laimick/luneapp
+    image: docker.io/laimick/luneapp:latest
     networks:
       - lune_net
     expose:
-      - 3000
+      - 8080
     restart: unless-stopped
 
   grafana:

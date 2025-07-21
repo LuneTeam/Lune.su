@@ -1,13 +1,23 @@
-FROM node:latest
+FROM golang:1.24.4 AS builder
 
-RUN useradd -m lune
+WORKDIR /src
 
-COPY --chown=lune:lune . /home/lune/app
+ENV CGO_ENABLED=0
 
-WORKDIR /home/lune/app
+COPY backend/main.go .
 
-EXPOSE 3000
+RUN go build -o /app/server main.go
 
-CMD [ "npx", "serve", "." ]
+FROM scratch
 
-USER lune
+WORKDIR /app
+
+COPY --chown=1000:1000 frontend/ frontend/
+
+COPY --from=builder /app/server .
+
+EXPOSE 8080
+
+USER 1000
+
+CMD [ "./server" ]
