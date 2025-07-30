@@ -1,3 +1,4 @@
+# This folder is purely for informational purposes! You should do everything in another repository!!!
 FROM golang:1.24.4 AS builder
 
 WORKDIR /src
